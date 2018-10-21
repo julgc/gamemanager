@@ -4,23 +4,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class User {
-	public User() {
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME" }))
+public class Users {
+	public Users() {
 	}
 
-	public User(String userId, String password, boolean enabled) {
+	public Users(String username, String password, boolean enabled) {
 		super();
-		this.userId = userId;
+		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
 	}
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private String userId;
+	private String username;
 	private String password;
+	private String role;
 	private boolean enabled;
 
 	public Integer getId() {
@@ -31,12 +36,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -53,6 +58,14 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }
