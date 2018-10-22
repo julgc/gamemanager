@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,13 +27,18 @@ public class MainController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> userRoles = auth.getAuthorities();
 		
-		for(GrantedAuthority role : userRoles) {
-			if(role.getAuthority().equals("USER"))
-				return "/user";
-			else if(role.getAuthority().equals("ADMIN"))
-				return "/admin";
-		}
+		String returnPath = "redirect:/login";
 		
-		return "redirect:/login";
+		for (GrantedAuthority role : userRoles) {
+			if (role.getAuthority().equals("ROLE_USER")) {
+				returnPath = "redirect:/user";
+				break;
+			} else if (role.getAuthority().equals("ROLE_ADMIN")) {
+				returnPath = "redirect:/admin";
+				break;
+			}
+		}
+
+		return returnPath;
 	}
 }
