@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>LOGIN</title>
+</head>
+<body>
+	<H3>Welcome, Stranger</H3>
+	<p th:text="${msg}"></p>
+	<form th:action="${#httpServletRequest.getContextPath()}+'/login'" method="post">
+		<input type="text" name="username"></input><br /> <input
+			type="password" name="password"></input> <br />
+		<input type="submit" value="Login" />
+	</form>
+</body>
+</html>
