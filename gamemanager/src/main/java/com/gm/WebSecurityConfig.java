@@ -31,13 +31,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
-		http.authorizeRequests().anyRequest().authenticated()
-        .and().authorizeRequests().antMatchers("/").permitAll()
+		http.authorizeRequests().antMatchers("/").permitAll()
 		.and().authorizeRequests().antMatchers("/user","/user/**").access("hasRole('ROLE_USER')")
 		.and().authorizeRequests().antMatchers("/admin","/admin/**").access("hasRole('ROLE_ADMIN')")
-		.and().formLogin().loginPage("/login").failureHandler(customAuthenticationFailureHandler()).permitAll()
+		.and().formLogin().loginPage("/login").permitAll().failureHandler(customAuthenticationFailureHandler())
 		.usernameParameter("username").passwordParameter("password")
-		.and().logout().permitAll()
+		.and().logout()
 		.and().csrf();
 		//@formatter:on
 	}
